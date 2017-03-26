@@ -6,6 +6,7 @@
 const app = require('../app');
 const debug = require('debug')('socketDebug:server');
 const http = require('http');
+const RequestInfo = require("../util/requestInfo");
 
 /**
  * Get port from environment and store in Express.
@@ -47,27 +48,19 @@ server.on("connection", function (socket) {
         // }
     });
     socket.on('error', function (err) {
+        RequestInfo.write(request);
         console.log(err);
     });
     socket.on('end', function () {
-        let fs = require('fs');
-        let fw = fs.createWriteStream("socketRequestInfo.txt");
-        fw.write(request);
-        fw.close();
+        RequestInfo.write(request);
         console.log('connection is end');
     });
     socket.on('close', function () {
-        let fs = require('fs');
-        let fw = fs.createWriteStream("socketRequestInfo.txt");
-        fw.write(request);
-        fw.close();
+        RequestInfo.write(request);
         console.log('connection is close');
     });
     socket.on('finish', function () {
-        let fs = require('fs');
-        let fw = fs.createWriteStream("socketRequestInfo.txt");
-        fw.write(request);
-        fw.close();
+        RequestInfo.write(request);
         console.log('connection is finish');
     });
 
