@@ -29,15 +29,19 @@ const server = http.createServer((req, res) => {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-server.on("connect", function (test) {
-    console.log("1" + test);
-});
+// server.on("connect", function (test) {
+//     console.log("1" + test);
+// });
 server.on("connection", function (socket) {
     // 只要连接上就触发
     // console.log(req);
+    // 请求地址对象信息
     console.log(socket.address());
+    // 远程访问的ip地址
     console.log(socket.remoteAddress);
+    // ipv4 or ipv6
     console.log(socket.remoteFamily);
+    // 远端请求端口
     console.log(socket.remotePort);
     let first = 0;
     let request = "";
@@ -50,6 +54,7 @@ server.on("connection", function (socket) {
         //     first = 1;
         // }
     });
+    // 捕获异常
     socket.on('error', function (err) {
         RequestInfo.write(request);
         console.log(err);
@@ -68,17 +73,22 @@ server.on("connection", function (socket) {
     });
 
 });
-// 只要有请求就触发
+// 只要有标准HTTP协议请求就触发
 server.on("request", function (req) {
     // http.IncomingMessage
+    // header信息
     console.log(req.headers);
+    // 请求方法
     console.log(req.method);
-    console.log(req.rawHeaders);
-    console.log(req.rawTrailers);
+    // console.log(req.rawHeaders);
+    // console.log(req.rawTrailers);
+    // 请求码
     console.log(req.statusCode);
+    // 状态信息
     console.log(req.statusMessage);
+    // socket对象
     console.log(req.socket);
-    console.log(req.trailers);
+    // 请求地址
     console.log(req.url);
 });
 
