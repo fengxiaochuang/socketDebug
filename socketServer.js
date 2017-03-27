@@ -1,23 +1,26 @@
-#!/usr/bin/env node
-
+/**
+ * Created by Administrator on 2017/3/28.
+ */
 /**
  * Module dependencies.
  */
-const app = require('../app');
-const debug = require('debug')('socketDebug:server');
 const http = require('http');
-const RequestInfo = require("../util/requestInfo");
+const RequestInfo = require("./util/requestInfo");
 
 /**
  * Get port from environment and store in Express.
  */
 let port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+    // returns content-type = text/plain
+const server = http.createServer((req, res) => {
+        res.setHeader('Content-Type', 'text/html');
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end('server is running');
+    });
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -136,5 +139,5 @@ function onListening() {
     const bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    console.log('Listening on ' + bind);
 }
