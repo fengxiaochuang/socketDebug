@@ -86,7 +86,7 @@ server.on("request", function (req) {
     // 状态信息
     console.log(req.statusMessage);
     // socket对象
-    console.log(req.socket);
+    // console.log(req.socket);
     // 请求地址
     console.log(req.url);
 });
